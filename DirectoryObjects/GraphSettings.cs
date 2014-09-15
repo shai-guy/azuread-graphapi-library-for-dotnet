@@ -21,7 +21,7 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
     using System;
     using System.Collections.Generic;
 
-    /// <summary>
+	/// <summary>
     /// Defines the settings used to control <see cref="GraphConnection"/>.
     /// </summary>
     public class GraphSettings

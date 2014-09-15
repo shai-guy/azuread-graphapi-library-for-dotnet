@@ -99,6 +99,7 @@
     <Compile Include="ErrorHandling\RequestThrottledException.cs" />
     <Compile Include="ErrorHandling\ServiceUnavailableException.cs" />
     <Compile Include="ErrorHandling\UnsupportedQueryException.cs" />
+    <Compile Include="Extensions\UriBuilderExtensions.cs" />
     <Compile Include="Filters\ExpressionHelper.cs" />
     <Compile Include="Filters\FilterGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

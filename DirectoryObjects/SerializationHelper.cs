@@ -26,6 +26,8 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
     using System.Net;
     using System.Reflection;
     using System.Text;
+    using System.Web;
+
     using Microsoft.Azure.ActiveDirectory.GraphClient.ErrorHandling;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -92,6 +94,12 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
             {
                 pagedResults.PageToken = jtoken.ToString();
             }
+
+			if (rootObject.TryGetValue(Constants.AadDeltaLink, out jtoken))
+			{
+				Uri uri = jtoken.ToObject<Uri>();
+				pagedResults.DeltaToken = HttpUtility.ParseQueryString(uri.Query)[Constants.DeltaLinkQueryKeyName];
+			}
 
             // Check whether the json is an array or a single object.
             if (rootObject.TryGetValue(Constants.ODataValues, out jtoken))

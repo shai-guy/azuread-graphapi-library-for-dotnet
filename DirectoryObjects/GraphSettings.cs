@@ -21,7 +21,7 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
     using System;
     using System.Collections.Generic;
 
-    /// <summary>
+	/// <summary>
     /// Defines the settings used to control <see cref="GraphConnection"/>.
     /// </summary>
     public class GraphSettings
@@ -113,5 +113,10 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
             get { return this.graphDomainName; }
             set { this.graphDomainName = value; }
         }
+
+		/// <summary>
+		/// Gets or sets the value to indicate whether to use differential queries. Default is false.
+		/// </summary>
+		public bool UseDifferentialQueries { get; set; }
     }
 }

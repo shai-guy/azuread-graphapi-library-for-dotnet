@@ -28,6 +28,9 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
     using System.Reflection;
     using System.Text;
     using System.Web;
+
+    using Microsoft.Azure.ActiveDirectory.GraphClient.Extensions;
+
     using Newtonsoft.Json;
 
     /// <summary>
@@ -141,6 +144,9 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
                     entityAttribute.SetName);
                 uriBuilder = new UriBuilder(baseUri);
             }
+
+			// add the delta link to the uri
+			uriBuilder.AddParameter(Constants.DeltaLinkQueryKeyName, graphConnection.DeltaToken);
 
             filter[Constants.QueryParameterNameApiVersion] = graphConnection.GraphApiVersion;
             Utils.BuildQueryFromFilter(uriBuilder, filter);

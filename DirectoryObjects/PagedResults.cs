@@ -67,5 +67,10 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
         {
             get { return string.IsNullOrEmpty(this.PageToken); }
         }
+
+		/// <summary>
+		/// Gets the delta token of the last differential request.
+		/// </summary>
+		public string DeltaToken { get; internal set; }
     }
 }

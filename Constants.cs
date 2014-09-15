@@ -105,6 +105,16 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
         /// </summary>
         public const string ODataMetadataKey = "odata.metadata";
 
+		/// <summary>
+		/// Delta link key.
+		/// </summary>
+	    public const string AadDeltaLink = "aad.deltaLink";
+
+		/// <summary>
+		/// Delta link query key name.
+		/// </summary>
+	    public const string DeltaLinkQueryKeyName = "deltaLink";
+
         /// <summary>
         /// OData value key.
         /// </summary>

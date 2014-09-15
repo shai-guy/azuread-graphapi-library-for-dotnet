@@ -27,6 +27,7 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
     using System.Net;
     using System.Text;
     using System.Threading;
+
     using Newtonsoft.Json;
 
     /// <summary>
@@ -223,7 +224,9 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
             }
         }
 
-        #endregion
+	    internal String DeltaToken { get; private set; }
+
+	    #endregion
 
         #region Graph Object Manipulations.
         /// <summary>
@@ -256,6 +259,69 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
             return SerializationHelper.DeserializeJsonResponse<T>(
                 this.ListCore(typeof(T), pageToken, filter, out requestUri), requestUri);
         }
+
+	    /// <summary>
+	    /// List the delta directory objects of the given type since the last query
+	    /// </summary>
+	    /// <typeparam name="T">Type of directory object.</typeparam>
+	    /// <param name="pageToken">Page token.</param>
+	    /// <param name="filter">OData filter.</param>
+	    /// <param name="deltaToken">
+	    ///		The delta token of the last query.
+	    ///		First query should be an empty token.
+	    /// </param>
+	    /// <returns>Paged collection of results.</returns>
+	    [GraphMethod(true)]
+		public virtual PagedResults<T> ListDifferential<T>(string pageToken, FilterGenerator filter, string deltaToken) where T : GraphObject
+		{
+			Uri requestUri;
+
+			// TODO: Refactor this: This temp (and ugly) assignment is to avoid refactoring for now
+		    DeltaToken = deltaToken;
+		    var response = SerializationHelper.DeserializeJsonResponse<T>(
+				this.ListCore(typeof(T), pageToken, filter, out requestUri), requestUri);
+
+		    DeltaToken = string.Empty;
+
+		    return response;
+		}
+
+		/// <summary>
+		/// List the delta directory objects of the given type since the last query
+		/// </summary>
+		/// <typeparam name="T">
+		/// Type of directory object.
+		/// </typeparam>
+		/// <param name="objectType">
+		/// The object Type.
+		/// </param>
+		/// <param name="pageToken">
+		/// Page token.
+		/// </param>
+		/// <param name="filter">
+		/// OData filter.
+		/// </param>
+		/// <param name="deltaToken">
+		/// 		The delta token of the last query.
+		/// 		First query should be an empty token.
+		/// </param>
+		/// <returns>
+		/// Paged collection of results.
+		/// </returns>
+		[GraphMethod(true)]
+		public virtual PagedResults<GraphObject> ListDifferential(Type objectType, string pageToken, FilterGenerator filter, string deltaToken)
+		{
+			Uri requestUri;
+
+			// TODO: Refactor this: This temp (and ugly) assignment is to avoid refactoring for now
+			DeltaToken = deltaToken;
+			var response = SerializationHelper.DeserializeJsonResponse<GraphObject>(
+				this.ListCore(objectType, pageToken, filter, out requestUri), requestUri);
+
+			DeltaToken = string.Empty;
+
+			return response;
+		}
 
         /// <summary>
         /// Get current tenant details.

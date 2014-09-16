@@ -113,10 +113,5 @@ namespace Microsoft.Azure.ActiveDirectory.GraphClient
             get { return this.graphDomainName; }
             set { this.graphDomainName = value; }
         }
-
-		/// <summary>
-		/// Gets or sets the value to indicate whether to use differential queries. Default is false.
-		/// </summary>
-		public bool UseDifferentialQueries { get; set; }
     }
 }
